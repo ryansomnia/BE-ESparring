@@ -1,0 +1,31 @@
+{
+  "name": "be-esparring",
+  "version": "1.0.0",
+  "description": "Backend for ESparring",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Heriyanto Sitorus",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-timeout": "^1.9.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.6.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "ip": "^1.1.5",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.3.0",
+    "moment": "^2.29.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
+    "node-cron": "^3.0.0",
+    "nodemailer": "^6.6.2",
+    "nodemon": "^2.0.7",
+    "otp-generator": "^2.0.1"
+  }
+}

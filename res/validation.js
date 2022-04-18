@@ -31,12 +31,14 @@ exports.validateEmail = (data) => {
 
 }
 
-exports.empytvalue = (values, res) => {
-    let data = {
-        'status': 200,
-        'values': `${values}data parameter or req is empty`
-    };
-    res.json(data);
+exports.empytvalue = (res) => {
+          let respon = {
+          'code': 400,
+          'status': "error",
+          'error': `data parameter or req is empty, please fill this field`
+      };
+  
+    res.status(400).send(respon)
     res.end();
 }
 exports.wrongvalue = (values, res) => {

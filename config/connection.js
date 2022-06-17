@@ -6,10 +6,10 @@ const mysql = require("mysql2/promise");
 let conn = {
   query: async (qry) => {
     let createConnect = await mysql.createConnection({
-      host: process.env.DBLOCAL_HOST,
-      user: process.env.DBLOCAL_USER,
-      password: process.env.DBLOCAL_PASSWORD,
-      database: process.env.DBLOCAL_DATABASE,
+      host: process.env.vps_HOST,
+      user: process.env.vps_USER,
+      password: process.env.vps_PASSWORD,
+      database: process.env.vps_DATABASE,
     });
 
    await createConnect.connect(function (err) {

@@ -1,10 +1,10 @@
 "use strict";
-const md5 = require("md5")
+const md5 = require("md5");
 let validation = require("../res/validation");
 let conn = require("../config/connection");
 let dotenv = require("dotenv");
 let env = dotenv.config();
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 let user = {
   getAllData: async (req, res) => {
@@ -28,21 +28,23 @@ let user = {
     }
   },
   register: async (req, res) => {
-    let { username, password, fullName } = req.body;
+    let { namaLengkap, password, email, noHP } = req.body;
 
-    if (!username || !password || !fullName ) {
-      validation.empytvalue(res)
-      return
+    if (!namaLengkap || !password || !email || !noHP ) {
+      validation.empytvalue(res);
+      return;
     }
 
-
     try {
-      let qry = `INSERT INTO user (username, password, fullname, status) VALUES ("${username}","${md5(password)}","${fullName}","0")`
+      let qry = `INSERT INTO user (namaLengkap, password, email, noHP, role, status) 
+      VALUES ("${namaLengkap}","${md5(
+        password
+      )}","${email}","${noHP}","user",1)`;
       let result = await conn.query(qry);
       let respons = {
         code: 200,
         status: "success",
-        data: `${username} Register Success`,
+        data: `${namaLengkap} Register Success`,
       };
       res.status(200).send(respons);
     } catch (e) {
@@ -54,45 +56,46 @@ let user = {
       console.log(e);
       res.status(400).send(error);
     }
-
   },
   login: async (req, res) => {
-    let { username, password } = req.body;
+    let { email, password } = req.body;
 
-    if (!username || !password ) {
-      validation.empytvalue(res)
-      return
+    if (!email || !password) {
+      validation.empytvalue(res);
+      return;
     }
 
     try {
-      let qry = `SELECT * FROM user WHERE username = '${username}' AND password = '${md5(password)}' `;
+      let qry = `SELECT * FROM user WHERE email = '${email}' AND password = '${md5(
+        password
+      )}' `;
       let result = await conn.query(qry);
-if (result.length == 0) {
-  let error = {
-    code: 401,
-    status: "error",
-    error: "gagal login, periksa kembali username password anda!",
-  };
-  res.status(401).send(error);
-} else {
-      let token = jwt.sign({ result }, process.env.SECRET_KEY, {
-                    expiresIn: Math.floor(new Date() / 1000)
-                });
+      if (result.length == 0) {
+        let error = {
+          code: 401,
+          status: "error",
+          error: "gagal login, periksa kembali email password anda!",
+        };
+        res.status(401).send(error);
+      } else {
+        let token = jwt.sign({ result }, process.env.SECRET_KEY, {
+          expiresIn: Math.floor(new Date() / 1000),
+        });
 
-                let data = {
-                  code: 200,
-                  status:"verified",
-                  data : { 
-                  "username": username,
-                  "fullName": result.fullName,
-                  "status": result.status,
-                  accessToken: token
-                  }
-                }
-res.status(200).send(data);
-return
-}
-      
+        let data = {
+          code: 200,
+          status: "verified",
+          data: {
+            email: email,
+            namaLengkap: result[0].namaLengkap,
+            status: result[0].status,
+            accessToken: token,
+          },
+        };
+        // console.log(result);
+        res.status(200).send(data);
+        return;
+      }
     } catch (e) {
       let error = {
         code: 400,
@@ -102,9 +105,6 @@ return
       console.log(e);
       res.status(400).send(error);
     }
-    
-
-
   },
 };
 

@@ -11,6 +11,7 @@ var timeout=require('connect-timeout');
 router.get('/esparing/user/getUser',verifikasi.verifikasi(), user.getAllData);
 router.post('/esparing/user/register', user.register);
 router.post('/esparing/user/login', user.login);
+
 // API Lapangan
 router.get('/esparing/user/getLapangan', lapangan.getAllData);
 // API Booking

@@ -36,7 +36,7 @@ let user = {
     }
 
     try {
-      let qry = `INSERT INTO user (namaLengkap, password, email, noHP, role, status) 
+      let qry = `INSERT INTO User (namaLengkap, password, email, noHP, role, status) 
       VALUES ("${namaLengkap}","${md5(
         password
       )}","${email}","${noHP}","user",1)`;

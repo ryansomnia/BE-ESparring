@@ -66,7 +66,7 @@ let user = {
     }
 
     try {
-      let qry = `SELECT * FROM user WHERE email = '${email}' AND password = '${md5(
+      let qry = `SELECT * FROM User WHERE email = '${email}' AND password = '${md5(
         password
       )}' `;
       let result = await conn.query(qry);
